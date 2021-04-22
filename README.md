@@ -18,22 +18,25 @@ In order to achieve the stretch goal, an in-memory database was used, but furthe
 
 The main libraries that I have selected to create this solution are:
 
-- config: Very simple library to get the configurations
-- csv-batch: Efficient library to process a csv file.
-- express: Standard library to create a microservice.
-- lodash: Useful well-known functions
-- mongodb: Standard driver to connect to mongodb
-- mongodb-memory-server: In memory mongodb
-- multer: Standard library in addition to express for multipart-forms
-- randomstring: Quick way to generate random data
-- store: Common place to save key-value pairs
-- jest: Fast and safe test framework
-- nodemon: Automatic hot reload for faster development
+| Library                  | Description                                                 |
+| ------------------------ | ----------------------------------------------------------- |
+| **config**               | Very simple library to get the configurations               |
+| **csv-batch**            | Efficient library to process a csv file.                    |
+| **express**              | Standard library to create a microservice.                  |
+| **lodash**               | Useful well-known functions                                 |
+| **mongodb**              | Standard driver to connect to mongodb                       |
+| **mongodb-memoryserver** | In memory mongodb                                           |
+| **multer**               | Standard library in addition to express for multipart-forms |
+| **randomstring**         | Quick way to generate random data                           |
+| **store**                | Common place to save key-value pairs                        |
+| **jest**                 | Fast and safe test framework                                |
+| **nodemon**              | Automatic hot reload for faster development                 |
 
 ## Assumptions
 
 - Columns may be unordered
 - Columns are unique
+- Column names are not misspelled
 
 ## Scripts
 

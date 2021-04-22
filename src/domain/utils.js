@@ -38,7 +38,8 @@ const createCsvFile = async (
   stream.end();
 };
 
-const getFirstLine = async (stream) => {
+const getFirstLine = async (path) => {
+  const stream = fs.createReadStream(path);
   const reader = readline.createInterface({ input: stream });
   const line = await new Promise((resolve) => {
     reader.on('line', (line) => {

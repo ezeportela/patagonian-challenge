@@ -15,5 +15,6 @@ module.exports = {
     'zip_code',
     'create_date',
     'update_date',
+    'provider_name',
   ],
 };

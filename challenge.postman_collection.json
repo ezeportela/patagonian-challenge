@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "4b69a0f1-382a-4fc1-ac1e-172367958aa2",
+		"name": "challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"description": "(Required) Csv file to process",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "delimiter",
+							"value": "<string>",
+							"description": "(Required) column separator char",
+							"type": "text"
+						},
+						{
+							"key": "provider_name",
+							"value": "<string>",
+							"description": "(Required) The name of the provider",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/upload",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"upload"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "upload",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"description": "(Required) Csv file to process",
+									"type": "file",
+									"src": "/home/eportela/nodejs/patagonian-challenge/tmp.csv"
+								},
+								{
+									"key": "delimiter",
+									"value": "|",
+									"description": "(Required) column separator char",
+									"type": "text"
+								},
+								{
+									"key": "provider_name",
+									"value": "Company",
+									"description": "(Required) The name of the provider",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"36-VCqRMdB8AN9N/59sPzlP2PvcT9c\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Apr 2021 12:59:36 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2021-04-22T12:59:36.169Z\",\n    \"status\": \"OK\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

@@ -15,7 +15,16 @@ test('upload csv file', async () => {
     filename = 'tmp.csv';
     size = 1000;
 
-    await createCsvFile(filename, size, config.csv_columns, 12, delimiter);
+    columns = [
+      'create_date',
+      'update date',
+      'uuid',
+      'vin',
+      'price',
+      'year',
+      'zip code',
+    ];
+    await createCsvFile(filename, size, columns, 12, delimiter);
     const fileStream = fs.createReadStream(filename);
 
     const instance = createMongoInstance();
@@ -23,32 +32,20 @@ test('upload csv file', async () => {
 
     store.set('mongoUri', mongoUri);
 
-    const data = await uploadRepository(fileStream, delimiter);
+    const data = await uploadRepository(
+      'test_provider',
+      filename,
+      fileStream,
+      delimiter
+    );
 
+    const test = data.data[0].ops[1];
     const { dbo } = await connectMongo(mongoUri, 'backoffice');
     const collection = dbo.collection('store');
-    const count = await collection.count();
-    console.log(count);
+    const count = await collection.countDocuments();
 
     expect(count).toBe(size);
   } catch (err) {
     expect(err).toBeNull();
-    console.log(err);
-  }
-});
-
-const { getFirstLine, normalizeHeaders } = require('../src/domain/utils');
-
-test('danfo test', async () => {
-  try {
-    const filename = 'tmp.csv';
-    const delimiter = '|';
-    const fileStream = fs.createReadStream(filename);
-
-    const line = await getFirstLine(fileStream);
-    const headers = normalizeHeaders(line, delimiter);
-    console.log(headers);
-  } catch (err) {
-    console.log(err);
   }
 });

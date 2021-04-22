@@ -7,6 +7,8 @@ exports.healthcheckController = (_, res) =>
 
 exports.uploadController = async (req, res) => {
   try {
+    const start = process.hrtime();
+
     const csvPath = req.file.path;
     const delimiter = req.body.delimiter;
     const provider_name = req.body.provider_name;
@@ -21,10 +23,13 @@ exports.uploadController = async (req, res) => {
 
     const csvFile = fs.createReadStream(csvPath);
 
-    uploadRepository(csvFile, delimiter);
-    res.json({ timestamp: new Date(), status: 'OK' });
+    uploadRepository(provider_name, csvPath, csvFile, delimiter);
+
+    end = process.hrtime(start);
+    const time_elapsed = (end[1] / 1000000).toFixed(2);
+
+    res.json({ time_elapsed: `${time_elapsed}ms`, status: 'OK' });
   } catch (err) {
-    console.log(err);
     res.json(err);
   }
 };
