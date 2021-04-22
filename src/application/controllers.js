@@ -1,4 +1,4 @@
-const { jsonFromCsv } = require('../domain/utils');
+const fs = require('fs');
 const uploadRepository = require('../domain/uploadRepository');
 
 exports.healthcheckController = (_, res) =>
@@ -6,10 +6,11 @@ exports.healthcheckController = (_, res) =>
 
 exports.uploadController = async (req, res) => {
   try {
-    const csvPath = req.file;
+    const csvPath = req.file.path;
+    console.log(csvPath);
+    const csvFile = fs.createReadStream(csvPath);
 
-    const data = await jsonFromCsv(csvPath, '|');
-    console.log(data);
+    uploadRepository(csvFile, '|');
     res.json({ timestamp: new Date(), status: 'OK' });
   } catch (err) {
     console.log(err);

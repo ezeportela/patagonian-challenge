@@ -1,22 +1,33 @@
 const fs = require('fs');
-const { createMongoInstance } = require('../src/infrastructure/mongoService');
 const config = require('config');
+const {
+  createMongoInstance,
+  connectMongo,
+} = require('../src/infrastructure/mongoService');
 const { createCsvFile } = require('../src/domain/utils');
+const store = require('store');
 
 const uploadRepository = require('../src/domain/uploadRepository');
 
 test('upload csv file', async () => {
   const delimiter = '|';
   filename = 'tmp.csv';
+  size = 1000;
 
-  await createCsvFile(filename, 1000, config.csv_columns, 10, delimiter);
+  await createCsvFile(filename, size, config.csv_columns, 12, delimiter);
   const fileStream = fs.createReadStream(filename);
 
   const instance = createMongoInstance();
   const mongoUri = await instance.getUri();
 
-  const data = await uploadRepository(fileStream, delimiter);
-  console.log(data);
+  store.set('mongoUri', mongoUri);
 
-  expect(1).toBe(1);
+  const data = await uploadRepository(fileStream, delimiter);
+
+  const { dbo } = await connectMongo(mongoUri, 'backoffice');
+  const collection = dbo.collection('store');
+  const count = await collection.count();
+  console.log(count);
+
+  expect(count).toBe(size);
 });

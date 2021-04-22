@@ -3,7 +3,7 @@ const multer = require('multer');
 const { healthcheckController, uploadController } = require('./controllers');
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ dest: '/tmp' });
 
 router.get('/healthcheck', healthcheckController);
 
