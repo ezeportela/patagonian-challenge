@@ -3,7 +3,7 @@ const env = (name) => process.env[name];
 module.exports = {
   api_port: env('PORT') || 3000,
 
-  csv_columns = [
+  csv_columns: [
     'UUID',
     'VIN',
     'Make',
@@ -14,5 +14,5 @@ module.exports = {
     'Zip Code',
     'Create Date',
     'Update Date',
-  ]
+  ],
 };
