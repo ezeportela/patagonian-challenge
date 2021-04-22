@@ -1,10 +1,5 @@
 # Challenge Resolution Overview
 
-## Assumptions
-
-- Columns may be unordered
-- Columns are unique
-
 ## Design Decissions
 
 To resolve this challenge I have chosen a Domain Driven Design (DDD), which a splits the solution into 3 layers.
@@ -34,6 +29,11 @@ The main libraries that I have selected to create this solution are:
 - store: Common place to save key-value pairs
 - jest: Fast and safe test framework
 - nodemon: Automatic hot reload for faster development
+
+## Assumptions
+
+- Columns may be unordered
+- Columns are unique
 
 ## Scripts
 

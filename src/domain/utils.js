@@ -1,5 +1,6 @@
 const fs = require('fs');
 const randomstring = require('randomstring');
+const readline = require('readline');
 
 const randomColumns = (length) =>
   Array(length)
@@ -37,6 +38,23 @@ const createCsvFile = async (
   stream.end();
 };
 
+const getFirstLine = async (stream) => {
+  const reader = readline.createInterface({ input: stream });
+  const line = await new Promise((resolve) => {
+    reader.on('line', (line) => {
+      reader.close();
+      resolve(line);
+    });
+  });
+  stream.close();
+  return line;
+};
+
+const normalizeHeaders = (line, delimiter) =>
+  line.split(delimiter).map((col) => col.toLowerCase().replace(/\s+/, '_'));
+
 module.exports = {
   createCsvFile,
+  getFirstLine,
+  normalizeHeaders,
 };
