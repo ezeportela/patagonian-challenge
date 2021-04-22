@@ -19,6 +19,7 @@
     "config": "3.3.6",
     "csv-batch": "2.0.2",
     "express": "4.17.1",
+    "mongodb": "^3.6.6",
     "mongodb-memory-server": "6.9.6",
     "multer": "1.4.2",
     "randomstring": "1.1.5"

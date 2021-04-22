@@ -44,7 +44,9 @@ test('upload csv file', async () => {
 
   await createCsvFile(filename, 100, ['columna1', 'column2'], 10, delimiter);
   const fileStream = fs.createReadStream(filename);
+
   const data = await uploadRepository(fileStream, delimiter);
   console.log(data);
+
   expect(1).toBe(1);
 });
