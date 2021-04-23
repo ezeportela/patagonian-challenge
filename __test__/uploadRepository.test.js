@@ -40,7 +40,6 @@ test('upload csv file', async () => {
 
     expect(count).toBe(size);
   } catch (err) {
-    console.log(err);
     expect(err).toBeNull();
   }
 });
