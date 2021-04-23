@@ -1,5 +1,3 @@
-const fs = require('fs');
-const config = require('config');
 const {
   createMongoInstance,
   connectMongo,
@@ -25,27 +23,24 @@ test('upload csv file', async () => {
       'zip code',
     ];
     await createCsvFile(filename, size, columns, 12, delimiter);
-    const fileStream = fs.createReadStream(filename);
 
     const instance = createMongoInstance();
     const mongoUri = await instance.getUri();
 
     store.set('mongoUri', mongoUri);
 
-    const data = await uploadRepository(
-      'test_provider',
-      filename,
-      fileStream,
-      delimiter
-    );
+    await uploadRepository('test_provider', filename, delimiter);
 
-    const test = data.data[0].ops[1];
     const { dbo } = await connectMongo(mongoUri, 'backoffice');
     const collection = dbo.collection('store');
-    const count = await collection.countDocuments();
+    const result = await collection
+      .aggregate([{ $project: { count: { $size: '$items' } } }])
+      .toArray();
+    const { count } = result[0];
 
     expect(count).toBe(size);
   } catch (err) {
+    console.log(err);
     expect(err).toBeNull();
   }
 });

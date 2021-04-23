@@ -2,7 +2,10 @@ const {
   createMongoInstance,
   connectMongo,
 } = require('../src/infrastructure/mongoService');
-let instance, db, dbo;
+
+let instance;
+let db;
+let dbo;
 
 beforeAll(async () => {
   instance = createMongoInstance();

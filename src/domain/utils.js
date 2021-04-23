@@ -12,7 +12,7 @@ const writeStream = (stream, text) =>
     stream.write(text + '\n', 'utf8', () => resolve());
   });
 
-const writeHeaders = (stream, headers = [], cols = 0, delimiter) => {
+const writeHeaders = (stream, delimiter, headers = [], cols = 0) => {
   const _columns = [...headers, ...randomColumns(cols - headers.length)]
     .sort()
     .join(delimiter);
@@ -31,15 +31,17 @@ const createCsvFile = async (
 ) => {
   const stream = fs.createWriteStream(filename);
 
-  await writeHeaders(stream, columnNames, cols, delimiter);
+  await writeHeaders(stream, delimiter, columnNames, cols);
   for (let i = 0; i < size; i++) {
     await writeRow(stream, cols, delimiter);
   }
   stream.end();
 };
 
+const readStream = (path) => fs.createReadStream(path);
+
 const getFirstLine = async (path) => {
-  const stream = fs.createReadStream(path);
+  const stream = readStream(path);
   const reader = readline.createInterface({ input: stream });
   const line = await new Promise((resolve) => {
     reader.on('line', (line) => {
@@ -55,6 +57,7 @@ const normalizeHeaders = (line, delimiter) =>
   line.split(delimiter).map((col) => col.toLowerCase().replace(/\s+/, '_'));
 
 module.exports = {
+  readStream,
   createCsvFile,
   getFirstLine,
   normalizeHeaders,

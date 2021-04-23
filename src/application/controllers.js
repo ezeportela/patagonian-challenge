@@ -1,4 +1,3 @@
-const fs = require('fs');
 const uploadRepository = require('../domain/uploadRepository');
 const _ = require('lodash');
 
@@ -10,26 +9,23 @@ exports.uploadController = async (req, res) => {
     const start = process.hrtime();
 
     const csvPath = req.file.path;
-    const delimiter = req.body.delimiter;
-    const provider_name = req.body.provider_name;
+    const { delimiter, provider_name } = req.body;
 
     if (
       _.isEmpty(csvPath) ||
       _.isEmpty(delimiter) ||
       _.isEmpty(provider_name)
     ) {
-      res.json({ message: 'bad request' });
+      return res.status(400).json({ message: 'bad request' });
     }
 
-    const csvFile = fs.createReadStream(csvPath);
-
-    uploadRepository(provider_name, csvPath, csvFile, delimiter);
+    await uploadRepository(provider_name, csvPath, delimiter);
 
     end = process.hrtime(start);
     const time_elapsed = (end[1] / 1000000).toFixed(2);
 
     res.json({ time_elapsed: `${time_elapsed}ms`, status: 'OK' });
   } catch (err) {
-    res.json(err);
+    return res.status(500).json(err);
   }
 };
