@@ -8,7 +8,7 @@ const randomColumns = (length) =>
     .map((_) => randomstring.generate());
 
 const writeStream = (stream, text) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     stream.write(text + '\n', 'utf8', () => resolve());
   });
 
